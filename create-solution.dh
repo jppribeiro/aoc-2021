@@ -1,0 +1,28 @@
+#!/bin/bash
+
+set -e
+
+if [[ -z $1 ]]; then
+    echo "No argument for day number..."
+    exit 1
+fi
+
+if [[ -n $2 ]]; then
+    echo "Too many arguments"
+    exit 1
+fi
+
+mkdir internal/day$1
+
+echo "package day$1
+
+import \"aoc-2021/internal/utils\"
+
+func Solution() {
+	lines := utils.ReadInput(\"internal/day$1/input$1\")
+
+	// Implement solution here
+}
+" > internal/day$1/day$1.go
+
+touch internal/day$1/input$1
