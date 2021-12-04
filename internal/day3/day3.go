@@ -11,6 +11,11 @@ import (
 func Solution() {
 	lines := utils.ReadInput("internal/day3/input3")
 
+	part1(lines)
+
+}
+
+func part1(lines []string) []float32 {
 	gamma := 0
 	epsilon := 0
 
@@ -28,9 +33,9 @@ func Solution() {
 	for i, c := range calc {
 		e := len(calc) - 1 - i
 
-		fmt.Println(c / float32(len(lines)))
+		calc[i] = c / float32(len(lines))
 
-		if c/float32(len(lines)) >= 0.500000000 {
+		if calc[i] >= 0.500000000 {
 			gamma += int(math.Exp2(float64(e)))
 		} else {
 			epsilon += int(math.Exp2(float64(e)))
@@ -38,4 +43,14 @@ func Solution() {
 	}
 
 	fmt.Printf("Part 1: gamma * epsilon = %d\n", gamma*epsilon)
+
+	return calc
+}
+
+func part2(lines []string) {
+	n := len(strings.Split(lines[0], ""))
+
+	for i := 0; i < n; i++ {
+
+	}
 }
