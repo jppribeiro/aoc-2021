@@ -1,12 +1,16 @@
 # Advent of Code 2021
 My solutions for 'Advent of Code 2021' written in Go
 
-https://adventofcode.com
+https://adventofcode.com/2021
 
-To run the code you have to pass as a program argument, the day for which you want the solution:
+<h2>Build/Install</h2>
 
-```$> aoc-2021 day1``` will execute the solution for Day 1
+```$> go build aoc-2021``` will create a binary on the project root folder
 
-If you are using GoLand there are run configurations to execute each solution from the IDE.
+```$> go build aoc-2021``` will install the binary on your $PATH
 
-You can find these configurations inside the `.run` folder.
+<h2>Run</h2>
+
+To run the code you have to pass the day for which you want the solution as a program argument:
+
+```$> aoc-2021 day1``` (if you have the binary installed in your $PATH) will execute the solution for Day 1
