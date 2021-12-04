@@ -28,7 +28,7 @@ func Solution() {
 
 	rawResult := strings.Split(lines[0], ",")
 
-	buildBoards(lines[2:])
+	parseBoards(lines[2:])
 
 	for _, r := range rawResult {
 		n, _ := strconv.ParseInt(r, 10, 32)
@@ -54,7 +54,7 @@ func Solution() {
 	fmt.Printf("Result is: %d\n", lastWinner.result(lastWinnerN))
 }
 
-func buildBoards(lines []string) {
+func parseBoards(lines []string) {
 	newBoard := false
 	b := &board{[][]int{}, [][]bool{}, []int{0, 0, 0, 0, 0}, []int{0, 0, 0, 0, 0}, 0, false}
 

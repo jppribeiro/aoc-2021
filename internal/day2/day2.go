@@ -22,19 +22,17 @@ type posWithAim struct {
 func Solution() {
 	lines := utils.ReadInput("internal/day2/input2")
 
-	pos := pos{0,0}
+	pos := pos{0, 0}
 
-
-
-	posAim := posWithAim{0,0,0}
+	posAim := posWithAim{0, 0, 0}
 
 	for _, m := range lines {
 		move(&pos, m)
 		moveWithAim(&posAim, m)
 	}
 
-	fmt.Printf("First movement type results in %d\n", pos.h * pos.d)
-	fmt.Printf("Second movement type results in %d\n", posAim.h * posAim.d)
+	fmt.Printf("First movement type results in %d\n", pos.h*pos.d)
+	fmt.Printf("Second movement type results in %d\n", posAim.h*posAim.d)
 }
 
 func move(current *pos, mov string) {
@@ -44,7 +42,7 @@ func move(current *pos, mov string) {
 	dist, err := strconv.Atoi(m[1])
 
 	if err != nil {
-		fmt.Errorf("%s", err)
+		fmt.Printf("%s", err)
 		os.Exit(1)
 	}
 
@@ -56,7 +54,7 @@ func move(current *pos, mov string) {
 	case "up":
 		current.d = current.d - dist
 	default:
-		fmt.Errorf("wrong direction %s", dir)
+		fmt.Printf("wrong direction %s", dir)
 	}
 }
 
@@ -67,19 +65,19 @@ func moveWithAim(cur *posWithAim, move string) {
 	dist, err := strconv.Atoi(m[1])
 
 	if err != nil {
-		fmt.Errorf("%s", err)
+		fmt.Printf("%s", err)
 		os.Exit(1)
 	}
 
 	switch dir {
 	case "forward":
 		cur.h = cur.h + dist
-		cur.d = cur.d + cur.a * dist
+		cur.d = cur.d + cur.a*dist
 	case "down":
 		cur.a = cur.a + dist
 	case "up":
 		cur.a = cur.a - dist
 	default:
-		fmt.Errorf("wrong direction %s", dir)
+		fmt.Printf("wrong direction %s", dir)
 	}
 }
