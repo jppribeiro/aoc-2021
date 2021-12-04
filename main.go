@@ -20,5 +20,10 @@ func main() {
 
 	arg := os.Args[1]
 
+	if solutions[arg] == nil {
+		fmt.Printf("Invalid argument %s\n", arg)
+		os.Exit(1)
+	}
+
 	solutions[arg]()
 }
