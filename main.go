@@ -7,6 +7,11 @@ import (
 	"os"
 )
 
+var solutions = map[string]func(){
+	"day1": day1.Solution,
+	"day2": day2.Solution,
+}
+
 func main() {
 	if len(os.Args) <= 1 {
 		fmt.Println("Pass a day as argument: day<num>")
@@ -15,12 +20,5 @@ func main() {
 
 	arg := os.Args[1]
 
-	switch arg {
-	case "day1":
-		day1.Solution()
-	case "day2":
-		day2.Solution()
-	default:
-		fmt.Println("Pass a day as argument: day<num>")
-	}
+	solutions[arg]()
 }
