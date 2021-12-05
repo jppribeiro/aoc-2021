@@ -5,19 +5,24 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+
+	"github.com/davecgh/go-spew/spew"
 )
 
 type line struct {
-	x1 int
-	x2 int
-	y1 int
-	y2 int
+	x1    int
+	x2    int
+	y1    int
+	y2    int
+	ortho bool
 }
 
 func Solution() {
 	lines := utils.ReadInput("internal/day5/input5")
 
 	mapOrtho(lines)
+
+	mapAll(lines)
 }
 
 func mapOrtho(lines []string) {
@@ -103,7 +108,23 @@ func trace(world [][]int, lines []line) {
 
 		for x := minX; x <= maxX; x++ {
 			for y := minY; y <= maxY; y++ {
-				world[y][x] += 1
+				if l.ortho {
+					world[y][x] += 1
+					continue
+				}
+
+				if (l.x2 - l.x1) == 0 {
+					spew.Dump(l)
+				}
+
+				a := (l.y2 - l.y1) / (l.x2 - l.x1)
+				b := l.y2 - a*l.x2
+
+				y0 := a*x + b
+
+				if y0 == y {
+					world[y][x] += 1
+				}
 			}
 		}
 	}
@@ -121,10 +142,15 @@ func buildLines(lines []string, ortho bool) []line {
 
 		if ortho {
 			if x1 == x2 || y1 == y2 {
-				filteredLines = append(filteredLines, line{x1: int(x1), x2: int(x2), y1: int(y1), y2: int(y2)})
+				filteredLines = append(filteredLines, line{x1: int(x1), x2: int(x2), y1: int(y1), y2: int(y2), ortho: true})
 			}
 		} else {
-			filteredLines = append(filteredLines, line{x1: int(x1), x2: int(x2), y1: int(y1), y2: int(y2)})
+			if x1 == x2 || y1 == y2 {
+				filteredLines = append(filteredLines, line{x1: int(x1), x2: int(x2), y1: int(y1), y2: int(y2), ortho: true})
+				continue
+			}
+
+			filteredLines = append(filteredLines, line{x1: int(x1), x2: int(x2), y1: int(y1), y2: int(y2), ortho: false})
 		}
 	}
 
