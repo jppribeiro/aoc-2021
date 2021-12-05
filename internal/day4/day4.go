@@ -26,9 +26,18 @@ type board struct {
 func Solution() {
 	lines := utils.ReadInput("internal/day4/input4")
 
+	res := start(lines)
+
+	fmt.Printf("First winner: %d\n", res[0])
+	fmt.Printf("Last winner: %d\n", res[1])
+}
+
+func start(lines []string) [2]int {
 	rawResult := strings.Split(lines[0], ",")
 
 	parseBoards(lines[2:])
+
+	results := [2]int{}
 
 	for _, r := range rawResult {
 		n, _ := strconv.ParseInt(r, 10, 32)
@@ -40,8 +49,8 @@ func Solution() {
 
 			if b.isDone(int(n)) {
 				if !isWin {
-					fmt.Printf("Result is: %d\n", b.result(int(n)))
 					isWin = true
+					results[0] = b.result(int(n))
 				}
 
 				b.done = true
@@ -51,7 +60,8 @@ func Solution() {
 		}
 	}
 
-	fmt.Printf("Result is: %d\n", lastWinner.result(lastWinnerN))
+	results[1] = lastWinner.result(lastWinnerN)
+	return results
 }
 
 func parseBoards(lines []string) {

@@ -9,12 +9,14 @@ var mock = []string{
 	"0,9 -> 5,9",
 	"8,0 -> 0,8",
 	"9,4 -> 3,4",
+	"3,3 -> 3,9",
 }
 
 var mockLines = []line{
-	{0, 5, 9, 9},
-	{8, 0, 0, 8},
-	{9, 3, 4, 4},
+	{0, 5, 9, 9, true},
+	{8, 0, 0, 8, false},
+	{9, 3, 4, 4, true},
+	{3, 3, 3, 9, true},
 }
 
 var mockWorld = [][]int{
@@ -32,14 +34,16 @@ var mockWorld = [][]int{
 
 func Test_buildLines(t *testing.T) {
 	expectedOrtho := []line{
-		{0, 5, 9, 9},
-		{9, 3, 4, 4},
+		{0, 5, 9, 9, true},
+		{9, 3, 4, 4, true},
+		{3, 3, 3, 9, true},
 	}
 
 	expectedNonOrtho := []line{
-		{0, 5, 9, 9},
-		{8, 0, 0, 8},
-		{9, 3, 4, 4},
+		{0, 5, 9, 9, true},
+		{8, 0, 0, 8, false},
+		{9, 3, 4, 4, true},
+		{3, 3, 3, 9, true},
 	}
 
 	type args struct {
@@ -87,21 +91,22 @@ func Test_worldSize(t *testing.T) {
 
 func Test_trace(t *testing.T) {
 	var mockOrthoLines = []line{
-		{0, 5, 9, 9},
-		{9, 3, 4, 4},
+		{0, 5, 9, 9, true},
+		{9, 3, 4, 4, true},
+		{3, 3, 3, 9, true},
 	}
 
 	var expectedWorld = [][]int{
 		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-		{0, 0, 0, 1, 1, 1, 1, 1, 1, 1},
-		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-		{1, 1, 1, 1, 1, 1, 0, 0, 0, 0},
+		{0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
+		{0, 0, 0, 2, 1, 1, 1, 1, 1, 1},
+		{0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
+		{0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
+		{0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
+		{0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
+		{1, 1, 1, 2, 1, 1, 0, 0, 0, 0},
 	}
 
 	type args struct {
@@ -120,6 +125,28 @@ func Test_trace(t *testing.T) {
 
 			if !reflect.DeepEqual(mockWorld, expectedWorld) {
 				t.Errorf("expected: %v; got: %v", expectedWorld, mockWorld)
+			}
+		})
+	}
+}
+
+func Test_analyze(t *testing.T) {
+	type args struct {
+		lines []string
+		ortho bool
+	}
+	tests := []struct {
+		name string
+		args args
+		want int
+	}{
+		{"ortho", args{mock, true}, 2},
+		{"all", args{mock, false}, 4},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := analyze(tt.args.lines, tt.args.ortho); got != tt.want {
+				t.Errorf("analyze() = %v, want %v", got, tt.want)
 			}
 		})
 	}

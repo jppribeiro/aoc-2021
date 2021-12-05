@@ -20,15 +20,15 @@ type line struct {
 func Solution() {
 	lines := utils.ReadInput("internal/day5/input5")
 
-	mapOrtho(lines)
+	_ = analyze(lines, true)
 
-	mapAll(lines)
+	_ = analyze(lines, false)
 }
 
-func mapOrtho(lines []string) {
-	ortho := buildLines(lines, true)
+func analyze(lines []string, ortho bool) int {
+	ls := buildLines(lines, ortho)
 
-	worldSize := worldSize(ortho)
+	worldSize := worldSize(ls)
 
 	world := make([][]int, worldSize[1]+1)
 
@@ -36,7 +36,7 @@ func mapOrtho(lines []string) {
 		world[i] = make([]int, worldSize[0]+1)
 	}
 
-	trace(world, ortho)
+	trace(world, ls)
 
 	dangers := 0
 
@@ -49,32 +49,7 @@ func mapOrtho(lines []string) {
 	}
 
 	fmt.Printf("Dangers: %d\n", dangers)
-}
-
-func mapAll(lines []string) {
-	intLines := buildLines(lines, false)
-
-	worldSize := worldSize(intLines)
-
-	world := make([][]int, worldSize[1]+1)
-
-	for i := range world {
-		world[i] = make([]int, worldSize[0]+1)
-	}
-
-	trace(world, intLines)
-
-	dangers := 0
-
-	for _, row := range world {
-		for _, pos := range row {
-			if pos >= 2 {
-				dangers++
-			}
-		}
-	}
-
-	fmt.Printf("Dangers: %d\n", dangers)
+	return dangers
 }
 
 func trace(world [][]int, lines []line) {
