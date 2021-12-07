@@ -7,6 +7,7 @@ import (
 	"aoc-2021/internal/day4"
 	"aoc-2021/internal/day5"
 	"aoc-2021/internal/day6"
+	"aoc-2021/internal/day7"
 	"fmt"
 	"os"
 )
@@ -18,6 +19,7 @@ var solutions = map[string]func(){
 	"day4": day4.Solution,
 	"day5": day5.Solution,
 	"day6": day6.Solution,
+	"day7": day7.Solution,
 }
 
 func main() {
