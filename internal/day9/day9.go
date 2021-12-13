@@ -14,27 +14,18 @@ func Solution() {
 
 	heightMap = parseHeightMap(lines)
 
-	res := part1()
-
-	fmt.Println(res)
+	fmt.Println(part1())
 
 	fmt.Println(part2())
 }
 
 func part1() int {
-	top, right, bottom, left := 0, 0, 0, 0
-
 	danger := 0
 
-	for i:=1;i<len(heightMap)-1;i++ {
-		for j:=1;j<len(heightMap[i])-1;j++ {
-			top, right, bottom, left = i-1, j+1, i+1, j-1
+	lows := lows()
 
-			n := heightMap[i][j]
-			if n < heightMap[i][left] && n < heightMap[i][right] && n < heightMap[top][j] && n < heightMap[bottom][j] {
-				danger += n + 1
-			}
-		}
+	for _, l := range lows {
+		danger += heightMap[l[0]][l[1]] + 1
 	}
 
 	return danger
