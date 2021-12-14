@@ -2,6 +2,7 @@ package main
 
 import (
 	"aoc-2021/internal/day1"
+	"aoc-2021/internal/day10"
 	"aoc-2021/internal/day2"
 	"aoc-2021/internal/day3"
 	"aoc-2021/internal/day4"
@@ -14,14 +15,15 @@ import (
 )
 
 var solutions = map[string]func(){
-	"day1": day1.Solution,
-	"day2": day2.Solution,
-	"day3": day3.Solution,
-	"day4": day4.Solution,
-	"day5": day5.Solution,
-	"day6": day6.Solution,
-	"day7": day7.Solution,
-	"day9": day9.Solution,
+	"day1":  day1.Solution,
+	"day2":  day2.Solution,
+	"day3":  day3.Solution,
+	"day4":  day4.Solution,
+	"day5":  day5.Solution,
+	"day6":  day6.Solution,
+	"day7":  day7.Solution,
+	"day9":  day9.Solution,
+	"day10": day10.Solution,
 }
 
 func main() {
